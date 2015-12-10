@@ -1,0 +1,2 @@
+Put it in cron as:
+*/1 * * * * /usr/local/bin/update-qmail.sh >/dev/null 2>&1
