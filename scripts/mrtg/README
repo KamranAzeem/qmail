@@ -1,0 +1,3 @@
+* Put the shell script in /usr/local/bin
+* Put the mrtg.cfg file in /etc/mrtg/
+* The icon file goes in /var/www/mrtg/ . 
