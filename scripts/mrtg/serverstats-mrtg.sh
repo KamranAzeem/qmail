@@ -94,7 +94,7 @@ case $1 in
     TX=$(ip -s link ls $INTERFACE | grep -A1 -w TX | grep -v TX | awk '{print int(($1 / 1024)/1024)}')
     DATA1=$RX
     DATA2=$TX
-    DATASTRING="Network traffic for $INTERFACE"
+    DATASTRING="Network traffic for $INTERFACE (MB)"
     ;;
   (*)
     echo "Usage: $0 cpu|memory|load|root|home|spam"
