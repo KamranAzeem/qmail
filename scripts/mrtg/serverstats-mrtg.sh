@@ -87,6 +87,15 @@ case $1 in
     DATA2=$DATA1
     DATASTRING="SMTP blocked using RBL"
     ;;
+  (network)
+    INTERFACE=eth0
+    # echo "Network traffic"
+    RX=$(ip -s link ls $INTERFACE | grep -A1 -w RX | grep -v RX | awk '{print $1}')
+    TX=$(ip -s link ls $INTERFACE | grep -A1 -w TX | grep -v TX | awk '{print $1}')
+    DATA1=$RX
+    DATA2=$TX
+    DATASTRING="Network traffic for $INTERFACE"
+    ;;
   (*)
     echo "Usage: $0 cpu|memory|load|root|home|spam"
     exit 1
