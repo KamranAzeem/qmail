@@ -58,22 +58,34 @@ case $1 in
   (root):
     # echo "Root disk %"
     DATA1=$(/bin/df  | /bin/grep -w "/" | /bin/awk '{print $5}' | /usr/bin/tr -d '%')
+    DATA2=$DATA1
     DATASTRING="%disk - root (/)"
     ;;
   (home):
     # echo "Home partition %"
     DATA1=$(/bin/df  | /bin/grep -w "/home" | /bin/awk '{print $5}' | /usr/bin/tr -d '%')
+    DATA2=$DATA1
     DATASTRING="%disk - home (/home)"
     ;;
   (sent):
     echo "Numeber of emails sent today"
     ;;
   (received)
-    echo "Number of emails received today (including spam)"
+    # echo "Number of emails received today (including spam)"
+    LOGDATE=$(date +"%b %d")
+    MAILCLEAN=$(grep -w "spamd: clean message" /var/log/maillog* | grep "$LOGDATE" | wc -l)
+    MAILSPAM=$(grep -w "spamd: identified spam" /var/log/maillog* | grep "$LOGDATE" | wc -l)
+    DATA1=$MAILCLEAN
+    DATA2=$MAILSPAM
+    DATASTRING="Incoming Mails (SPAM / Clean)"
     ;;
   (blocked)
     echo "Number of rejected / blocked connections today."
     ;;
+  (*)
+    echo "Usage: $0 cpu|memory|load|root|home|spam"
+    exit 1
+    ;; 
 esac
 
 # Display the stats for MRTG.
