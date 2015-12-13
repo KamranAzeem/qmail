@@ -82,7 +82,7 @@ case $1 in
   (blocked)
     # echo "Number of rejected / blocked connections today at SMTP level."
     LOGDATE=$(date +"%Y-%m-%d")
-    SMTPRBL=$(grep rblsmtpd  /var/log/qmail/qmail-smtpd/current | tai64nlocal | grep $LOGDATE)
+    SMTPRBL=$(grep rblsmtpd  /var/log/qmail/qmail-smtpd/current | tai64nlocal | grep $LOGDATE | wc -l)
     DATA1=$SMTPRBL
     DATA2=$DATA1
     DATASTRING="SMTP blocked using RBL"
