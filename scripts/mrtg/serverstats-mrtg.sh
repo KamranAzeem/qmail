@@ -90,8 +90,8 @@ case $1 in
   (network)
     INTERFACE=eth0
     # echo "Network traffic"
-    RX=$(ip -s link ls $INTERFACE | grep -A1 -w RX | grep -v RX | awk '{print $1}')
-    TX=$(ip -s link ls $INTERFACE | grep -A1 -w TX | grep -v TX | awk '{print $1}')
+    RX=$(ip -s link ls $INTERFACE | grep -A1 -w RX | grep -v RX | awk '{print int($1 / 1024)}')
+    TX=$(ip -s link ls $INTERFACE | grep -A1 -w TX | grep -v TX | awk '{print int($1 / 1024)}')
     DATA1=$RX
     DATA2=$TX
     DATASTRING="Network traffic for $INTERFACE"
