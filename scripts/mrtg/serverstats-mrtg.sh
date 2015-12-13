@@ -80,7 +80,12 @@ case $1 in
     DATASTRING="Incoming Mails (SPAM / Clean)"
     ;;
   (blocked)
-    echo "Number of rejected / blocked connections today."
+    # echo "Number of rejected / blocked connections today at SMTP level."
+    LOGDATE=$(date +"%Y-%m-%d")
+    SMTPRBL=$(grep rblsmtpd  /var/log/qmail/qmail-smtpd/current | tai64nlocal | grep $LOGDATE)
+    DATA1=$SMTPRBL
+    DATA2=$DATA1
+    DATASTRING="SMTP blocked using RBL"
     ;;
   (*)
     echo "Usage: $0 cpu|memory|load|root|home|spam"
