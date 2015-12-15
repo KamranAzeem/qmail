@@ -82,19 +82,19 @@ case $1 in
   (blocked)
     # echo "Number of rejected / blocked connections today at SMTP level."
     LOGDATE=$(date +"%Y-%m-%d")
-    SMTPRBL=$(grep rblsmtpd  /var/log/qmail/qmail-smtpd/current | tai64nlocal | grep $LOGDATE | wc -l)
+    SMTPRBL=$(grep rblsmtpd  /var/log/qmail/qmail-smtpd/current | /usr/local/bin/tai64nlocal | grep $LOGDATE | wc -l)
     DATA1=$SMTPRBL
     DATA2=$DATA1
     DATASTRING="SMTP blocked using RBL"
     ;;
   (network)
     INTERFACE=eth0
-    # echo "Network traffic in MegaBytes"
-    RX=$(ip -s link ls $INTERFACE | grep -A1 -w RX | grep -v RX | awk '{print int(($1 / 1024)/1024)}')
-    TX=$(ip -s link ls $INTERFACE | grep -A1 -w TX | grep -v TX | awk '{print int(($1 / 1024)/1024)}')
+    # echo "Network traffic in Kilo bits"
+    RX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w RX | /bin/grep -v RX | /bin/awk '{print int( (($1 * 8 / 1024)) )}')
+    TX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w TX | /bin/grep -v TX | /bin/awk '{print int( (($1 * 8 / 1024)) )}')
     DATA1=$RX
     DATA2=$TX
-    DATASTRING="Network traffic for $INTERFACE (MB)"
+    DATASTRING="Network traffic for $INTERFACE (Kbits/sec)"
     ;;
   (*)
     echo "Usage: $0 cpu|memory|load|root|home|spam"
@@ -111,4 +111,5 @@ echo $(uptime)
 echo $DATASTRING
 
 exit $?
+
 
