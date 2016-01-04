@@ -9,7 +9,7 @@
 # Line 3 -string (in any human readable format), telling the uptime of the target.
 # Line 4 -string, telling the name of the target.
 
-#  It seems that the numbers must be integers.
+#  Decimal numbers are rounded automatically by MRTG, so there is no need to convert numbers to integers.
 
 case $1 in
   (cpu):
@@ -70,9 +70,21 @@ case $1 in
   (sent):
     echo "Numeber of emails sent today"
     ;;
-  (received)
+  (received|spam)
     # echo "Number of emails received today (including spam)"
-    LOGDATE=$(date +"%b %d")
+    # First, we have to figure out if the day is single digit or double digit.
+    # Based on that, we have to make necessary padding of space.  
+    DAY=$(date +"%e")
+    if [ $DAY -lt 10 ]; then
+      MONTH=$(date +"%b")
+      # An extra space is needed between month and day, if the day is between 1 and 9. 
+      # This is because of the way date is stored in /var/log/maillog.
+      # Note: $DAY already has a space in it.
+      LOGDATE="${MONTH} ${DAY}"
+    else
+      LOGDATE=$(date +"%b %e")
+    fi
+    # DEBUG: echo "DAY: -${DAY}-  . LOGDATE: $LOGDATE"
     MAILCLEAN=$(grep -w "spamd: clean message" /var/log/maillog* | grep "$LOGDATE" | wc -l)
     MAILSPAM=$(grep -w "spamd: identified spam" /var/log/maillog* | grep "$LOGDATE" | wc -l)
     DATA1=$MAILCLEAN
@@ -89,12 +101,12 @@ case $1 in
     ;;
   (network)
     INTERFACE=eth0
-    # echo "Network traffic in Kilo bits"
-    RX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w RX | /bin/grep -v RX | /bin/awk '{print int( (($1 * 8 / 1024)) )}')
-    TX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w TX | /bin/grep -v TX | /bin/awk '{print int( (($1 * 8 / 1024)) )}')
+    # echo "Network traffic in bits"
+    RX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w RX | /bin/grep -v RX | /bin/awk '{print int( (($1 * 8 )) )}')
+    TX=$(/sbin/ip -s link ls $INTERFACE | /bin/grep -A1 -w TX | /bin/grep -v TX | /bin/awk '{print int( (($1 * 8 )) )}')
     DATA1=$RX
     DATA2=$TX
-    DATASTRING="Network traffic for $INTERFACE (Kbits/sec)"
+    DATASTRING="Network traffic for $INTERFACE (bits/sec)"
     ;;
   (*)
     echo "Usage: $0 cpu|memory|load|root|home|spam"
@@ -111,5 +123,4 @@ echo $(uptime)
 echo $DATASTRING
 
 exit $?
-
 
