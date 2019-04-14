@@ -20,10 +20,9 @@ if [ -r ${PERL_MODULES_FILE} ]; then
     if [ $? -eq 0 ]; then 
       echo "Perl module ${MODULE} exists - skipping installation ..."
     else
-      echo "Installing perl module:  ${MODULE} --- Using: perl -MCPAN -e 'install ${MODULE}'"
-      # perl -MCPAN -e 'foreach (@ARGV) { CPAN::Shell->rematein("notest", "install", $_) }' $@
-      perl -MCPAN -e "CPAN::Shell->rematein("notest", "install", "${MODULE}")
-
+      echo "Installing perl module:  ${MODULE} ..."
+      # perl -MCPAN -e "CPAN::Shell->notest(install, ${MODULE})"
+      cpan -f -i ${MODULE}
     fi
   done
 else
