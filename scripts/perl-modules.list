@@ -8,6 +8,7 @@ Parse::Syslog
 Statistics::Distributions
 IP::Country::Fast
 Crypt::OpenSSL::Bignum
+Module::Build
 ClamAV::Client
 Mail::SPF::Query
 Mail::SPF
