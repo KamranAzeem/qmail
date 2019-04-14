@@ -2,7 +2,7 @@
 
 PERL_MODULES="Digest::SHA1 Digest::HMAC Net::DNS Time::HiRes HTML::Tagset HTML::Parser  Parse::Syslog Statistics::Distributions "
 
-PERL_MODULES_FILE=perl-packages.list
+PERL_MODULES_FILE=perl-modules.list
 
 
 
@@ -25,6 +25,8 @@ if [ -r ${PERL_MODULES_FILE} ]; then
 
     fi
   done
+else
+  echo "File not found: ${PERL_MODULES_FILE}"
 fi
 
 
