@@ -4,8 +4,16 @@ PERL_MODULES="Digest::SHA1 Digest::HMAC Net::DNS Time::HiRes HTML::Tagset HTML::
 
 PERL_MODULES_FILE=perl-packages.list
 
+
+
 if [ -r ${PERL_MODULES_FILE} ]; then
   echo "Found list of perl modules to be installed (${PERL_MODULES_FILE}) ..."
+
+  echo
+  echo "Please note: Some modules may require user input (yes, no, etc) ..."
+  echo 
+  sleep 5 
+
   for MODULE in $(cat ${PERL_MODULES_FILE}); do
     echo "Checking if ${MODULE} exists ..."
     perldoc -i -l ${MODULE}

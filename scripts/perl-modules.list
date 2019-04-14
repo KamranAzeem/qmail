@@ -6,7 +6,6 @@ HTML::Tagset
 HTML::Parser
 Parse::Syslog
 Statistics::Distributions
-Parse::Syslog
 IP::Country::Fast
 Crypt::OpenSSL::Bignum
 ClamAV::Client
