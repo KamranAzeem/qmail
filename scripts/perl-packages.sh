@@ -7,8 +7,14 @@ PERL_PACKAGES_FILE=perl-packages.list
 if [ -r ${PERL_PACKAGES_FILE} ]; then
   echo "Found list of perl modules to be installed (${PERL_PACKAGES_FILE}) ... installing ..."
   for PACKAGE in $(cat ${PERL_PACKAGES_FILE}); do
-    echo "Installing perl package: ---- ${PACKAGE}"
-    echo "perl -MCPAN -e 'install ${PACKAGE}'"
+    echo "Checking ${PACKAGE} ..."
+    perldoc -i -l ${PACKAGE}
+    if [ $? -ne 0 ]; then 
+      echo "Installing perl package: ---- ${PACKAGE}"
+      echo "perl -MCPAN -e 'install ${PACKAGE}'"
+    else
+      echo "Module already installed - skipping install"
+    fi
   done
 fi
 
