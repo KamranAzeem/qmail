@@ -1,0 +1,22 @@
+# Place this file under: /etc/systemd/system
+# Then:
+# systemctl enable daemontools.service
+# systemctl start daemontools.service
+
+[Unit]
+Description=daemontools Start supervise
+After=getty.target
+
+[Service]
+# Type=simple
+Type=fork
+User=root
+Group=root
+Restart=always
+# ExecStart=/command/svscanboot /dev/ttyS0
+ExecStart=/command/svscanboot
+TimeoutSec=0
+
+[Install]
+WantedBy=multi-user.target
+

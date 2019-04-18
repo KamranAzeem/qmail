@@ -1,9 +1,8 @@
 #!/bin/bash
 
-PERL_MODULES="Digest::SHA1 Digest::HMAC Net::DNS Time::HiRes HTML::Tagset HTML::Parser  Parse::Syslog Statistics::Distributions "
-
-PERL_MODULES_FILE=perl-modules.list
-
+SCRIPT_PATH=$(dirname $0)
+echo $SCRIPT_PATH
+PERL_MODULES_FILE=${SCRIPT_PATH}/perl-modules.list
 
 
 if [ -r ${PERL_MODULES_FILE} ]; then
@@ -21,7 +20,9 @@ if [ -r ${PERL_MODULES_FILE} ]; then
       echo "Perl module ${MODULE} exists - skipping installation ..."
     else
       echo "Installing perl module:  ${MODULE} ..."
+      # old method: (not reliable)
       # perl -MCPAN -e "CPAN::Shell->notest(install, ${MODULE})"
+      echo "Performing: cpan -f -i ${MODULE}"
       cpan -f -i ${MODULE}
     fi
   done
