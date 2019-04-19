@@ -19,14 +19,15 @@ VOLUME [ "/sys/fs/cgroup" ]
 
 CMD ["/usr/sbin/init"]
 
-
 EXPOSE 25 80 443 110 143 993 995 587
-
-
 
 RUN mkdir scripts
 
 # Copy only the software-packages.sh and perl-modules.* files to the scripts directory.
+# We will not copy entire scripts directory at the moment, because we keep adding scripts all the time.
+# If we copy entire scripts directory now, Docker will see a change in context,
+#   and will start to run the rpm/yum and perl installation steps again. That takes a lot of time.
+
 COPY scripts/rpm-packages.sh  scripts/
 COPY scripts/perl-modules.*  scripts/
 
@@ -35,6 +36,9 @@ RUN  scripts/rpm-packages.sh && scripts/perl-modules.sh
 
 # copy rest/all scripts to the scripts/ directory. 
 COPY scripts/ scripts/
+
+# copy local copy of various software, just in case.
+COPY software software
 
 # ENV:
 # The FQDN of the the mail server (this host) is needed so we can configure qmail properly.
@@ -45,8 +49,10 @@ ENV  QMAIL_FQDN  mail.example.com
 
 # From this point on we can run individual scripts to configure qmail.
 RUN     scripts/users-and-groups.sh \
-    &&  scripts/download-patch-install-qmail.sh
-
+    &&  scripts/download-patch-install-qmail.sh \
+    &&  scripts/download-install-ezmlm-idx.sh \
+    &&  scripts/download-install-autorespond.sh \
+    &&  scripts/download-install-maildrop.sh
 
 # COPY docker-entrypoint.d docker-entrypoint.d
 # COPY docker-entrypoint.sh /

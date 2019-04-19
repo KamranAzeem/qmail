@@ -15,6 +15,12 @@
 # Prerequisite: mysql-devel
 
 
+echo
+echo "------------------------------------------------------------------------------------"
+echo
+
+
+
 echo "Setting up ezmlm-idx 'without' mysql support ..."
 
 (
