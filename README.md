@@ -3,8 +3,9 @@ This repo will serve as a single source of the config files, scripts and steps f
 
 Build instructions:
 ```
-time docker build -t qmail:centos-7 . 
+docker build -t qmail:centos-7 . 
 ```
+**Note:** The above will take about 7+ minutes to build. So be patient :)
 
 
 Run instructions:
