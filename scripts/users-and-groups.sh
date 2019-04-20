@@ -16,3 +16,6 @@ useradd  -g qmail -d /var/qmail -s /sbin/nologin -p '*'  -c 'qmail remote user' 
 useradd  -g qmail -d /var/qmail -s /sbin/nologin -p '*'  -c 'qmail send user'   qmails
 
 
+# The following is needed for maildrop and vpopmail, and everything which depends on vpopmail.
+groupadd  vchkpw
+useradd  -g vchkpw -d /home/vpopmail -s /sbin/nologin  -p '*' -c 'vpopmail user' vpopmail

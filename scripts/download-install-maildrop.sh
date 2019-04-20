@@ -48,10 +48,10 @@ echo
 
 
 
-echo "Before we install maildrop, we need to create 'vchkpw' group and 'vpopmail' user . Creating ... "
-
-groupadd vchkpw
-useradd -g vchkpw -d /home/vpopmail -s /sbin/nologin -p '*' vpopmail
+# The vchkpw group and vpopmail user is created in the user-and-groups.sh script
+# echo "Before we install maildrop, we need to create 'vchkpw' group and 'vpopmail' user . Creating ... "
+# groupadd vchkpw
+# useradd -g vchkpw -d /home/vpopmail -s /sbin/nologin -p '*' vpopmail
 
 
 # You may need to install Courier unicode library  before you install maildrop. 
