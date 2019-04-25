@@ -110,9 +110,12 @@ echo
 
 echo 
 echo "Please note that you must not put your domain name in the locals file."
-echo "Means, if you are configuring your server to host emails for the domain example.com using vpopmail,"
+echo "Means, if you are configuring your server to host emails for the domain 'example.com' using vpopmail,"
 echo "  , then the locals file must not contain the domain 'example.com'."
 echo "It should only contain the full hostname of your server, such as 'qmail.example.com' ."
+echo "Or, it could just be empty , but yet must exist."
+echo "Great explanation by JMS here: https://qmail.jms1.net/upgrade-qmr.shtml"
+echo "Look for: 'Problems with locals file' in the link above."
 echo 
 
 echo

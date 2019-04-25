@@ -60,6 +60,20 @@ cd ${DIRNAME}
 make
 make install-strip
 
+
+echo
+echo "Note: From qmailadmin's INSTALL file:"
+echo "Please note that any time you reconfigure and install vpopmail"
+echo "you will need to rebuild and install QmailAdmin.  QmailAdmin"
+echo "statically links libvpopmail, so you need to recompile it"
+echo "whenever libvpopmail changes."
 echo
 )
+
+echo
+echo "Setting up vchkpw as setuid ... (Based on explanation by JMS - https://qmail.jms1.net/upgrade-qmr.shtml ..."
+echo
+chmod u+s /home/vpopmail/bin/vchkpw 
+ls -l /home/vpopmail/bin/vchkpw
+echo
 

@@ -52,7 +52,9 @@ RUN     scripts/users-and-groups.sh \
     &&  scripts/download-patch-install-qmail.sh \
     &&  scripts/download-install-ezmlm-idx.sh \
     &&  scripts/download-install-autorespond.sh \
-    &&  scripts/download-install-maildrop.sh
+    &&  scripts/download-install-maildrop.sh \
+    &&  scripts/download-install-vpopmail.sh 
+
 
 # COPY docker-entrypoint.d docker-entrypoint.d
 # COPY docker-entrypoint.sh /
